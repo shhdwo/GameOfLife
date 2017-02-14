@@ -2,18 +2,17 @@ package gameoflife;
 
 public class GameOfLife implements GameOfLifeEngine {
 	
-	int[][] todayState;
-	int[][] tommorowState;
-	int stage = 0;
+	private int[][] todayState;
+	private int[][] tommorowState;
+	private int stage = 0;
 	
 	//stworzenie planszy i stanu poczatkowego z tablicy dwuwymiarowej, gdzie kazdy element jest oznaczony jako 0-martwy lub 1-zywy
 	public void initiateLife(int[][] divineTouch) {
 		//todayState = divineTouch.clone();
 		//tommorowState = divineTouch.clone();
-		todayState = helpers.cloneMatrix(divineTouch);
-		tommorowState = helpers.cloneMatrix(divineTouch);
+		todayState = Helpers.cloneMatrix(divineTouch);
+		tommorowState = Helpers.cloneMatrix(divineTouch);
 	}
-	
 	
 	//symulacja kolejnego kroku
 	public void nextGeneration() {
@@ -24,7 +23,7 @@ public class GameOfLife implements GameOfLifeEngine {
 			}
 		}
 		//todayState = tommorowState.clone();
-		todayState = helpers.cloneMatrix(tommorowState);
+		todayState = Helpers.cloneMatrix(tommorowState);
 		stage++;
 	}
 	
@@ -38,22 +37,23 @@ public class GameOfLife implements GameOfLifeEngine {
 	public boolean willLive(int x, int y) {
 
 		int neighbors = 0; //licznik zywych sasiadow
-		neighbors = isAlive(x,y) ? -1 : 0; //odejmujemy 1 z licznika sasiadow w przypadku gdy aktualna komorka jest zywa (poniewaz w petli jest liczona)
+		neighbors = isAlive(x,y) ? -1 : 0; //odejmujemy 1 z licznika sasiadow w przypadku gdy aktualna 
+										   //komorka jest zywa (poniewaz w petli jest ona tez liczona)
 		
-		for (int i = -1; i <= 1; i++) {
+		for (int i = -1; i <= 1; i++) { //petla zliczajaca sasiadow
 			for (int j = -1; j <= 1; j++) {
-				try {
-					if (isAlive(x+i,y+j)) neighbors++;
-				}
-				catch (ArrayIndexOutOfBoundsException e) {
+				int posX = x+i;
+				int posY = y+j;
+				if (posX >= 0 && posY >= 0 && posX < todayState.length && posY < todayState[x].length) {
+					if (isAlive(posX, posY)) neighbors++;
 				}
 			}
 		}
 		
-		if (isAlive(x,y) && (neighbors >= 2 && neighbors <= 3)) {
+		if (isAlive(x,y) && (neighbors >= 2 && neighbors <= 3)) { //warunek przezycia dla zywej komorki
 			return true;
 		}
-		else if (!isAlive(x,y) && (neighbors == 3)) {
+		else if (!isAlive(x,y) && (neighbors == 3)) { //warunek przezycia dla martwej komorki
 			return true;
 		}
 		else return false;
@@ -69,5 +69,9 @@ public class GameOfLife implements GameOfLifeEngine {
 			System.out.println();
 		}
 	}
+	
+	public int[][] getTodayState() {
+		return todayState;
+	};
 
 }

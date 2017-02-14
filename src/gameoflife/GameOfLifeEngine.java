@@ -17,4 +17,7 @@ public interface GameOfLifeEngine {
 	//drukuje aktualny stan pola
 	public void showState();
 	
+	//zwraca tablice z aktualnym stanem
+	public int[][] getTodayState();
+	
 }

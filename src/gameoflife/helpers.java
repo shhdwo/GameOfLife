@@ -1,6 +1,6 @@
 package gameoflife;
 
-public class helpers {
+public class Helpers {
 
 	public static int[][] cloneMatrix(int[][] toBeCloned) {
 	
