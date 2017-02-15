@@ -8,8 +8,6 @@ public class GameOfLife implements GameOfLifeEngine {
 	
 	//stworzenie planszy i stanu poczatkowego z tablicy dwuwymiarowej, gdzie kazdy element jest oznaczony jako 0-martwy lub 1-zywy
 	public void initiateLife(int[][] divineTouch) {
-		//todayState = divineTouch.clone();
-		//tommorowState = divineTouch.clone();
 		todayState = Helpers.cloneMatrix(divineTouch);
 		tommorowState = Helpers.cloneMatrix(divineTouch);
 	}
@@ -22,7 +20,6 @@ public class GameOfLife implements GameOfLifeEngine {
 				else tommorowState[i][j] = 0;
 			}
 		}
-		//todayState = tommorowState.clone();
 		todayState = Helpers.cloneMatrix(tommorowState);
 		stage++;
 	}

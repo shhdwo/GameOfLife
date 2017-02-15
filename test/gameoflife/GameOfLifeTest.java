@@ -51,6 +51,26 @@ public class GameOfLifeTest {
 	}
 	
 	@Test
+	public void shouldReturn_1100_1100_0011_0011_whenPut_1100_1000_0001_0011 () {
+		//given
+		GameOfLife life = new GameOfLife();
+		int[][] divineTouch = {{1,1,0,0},
+							   {1,0,0,0},
+							   {0,0,0,1},
+							   {0,0,1,1}}; //tutaj podajemy tablice wejsciowa, 1-zywa komorka, 0-martwa
+		life.initiateLife(divineTouch);
+		//when
+		life.nextGeneration();
+		int[][] actual = life.getTodayState();
+		int[][] expected = {{1,1,0,0},
+						    {1,1,0,0},
+						    {0,0,1,1},
+						    {0,0,1,1}};
+		//then
+		Assert.assertArrayEquals(expected, actual);
+	}
+	
+	@Test
 	public void shouldReturn_11_11_whenPut_11_11 () {
 		//given
 		GameOfLife life = new GameOfLife();
